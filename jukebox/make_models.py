@@ -18,7 +18,7 @@ MODELS = {
     '5b': ("vqvae", "upsampler_level_0", "upsampler_level_1", "prior_5b"),
     '5b_lyrics': ("vqvae", "upsampler_level_0", "upsampler_level_1", "prior_5b_lyrics"),
     '1b_lyrics': ("vqvae", "upsampler_level_0", "upsampler_level_1", "prior_1b_lyrics"),
-   # 'your_model': ("vqvae_h4", "upsampler_level_0", "upsampler_level_1","upsampler_level_2", "prior_72")
+    'custom_model': ("custom_small_vqvae", "custom_upsampler_level_0", "custom_upsampler_level_1","custom_upsampler_level_2", "small_prior")
 }
 
 def load_checkpoint(path):
