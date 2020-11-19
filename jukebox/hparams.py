@@ -32,7 +32,9 @@ easy = Hyperparams(
     sr=22050,
 )
 HPARAMS_REGISTRY["easy"] = easy
+
 REMOTE_PREFIX = 'https://openaipublic.azureedge.net/'
+
 # Model hps
 vqvae = Hyperparams(
     levels = 3,
@@ -52,31 +54,9 @@ vqvae = Hyperparams(
     depth = 4,
     m_conv = 1.0,
     dilation_growth_rate = 3,
-    restore_vqvae=f'gs://jukebox-assets/models/5b/vqvae.pth.tar',
+    restore_vqvae=REMOTE_PREFIX + 'jukebox/models/5b/vqvae.pth.tar',
 )
 HPARAMS_REGISTRY["vqvae"] = vqvae
-
-vqvaeh4 = Hyperparams(
-    levels = 4,
-    downs_t = (3, 2, 2),
-    strides_t = (2, 2, 2),
-    emb_width = 64,
-    l_bins = 2048,
-    l_mu = 0.99,
-    commit = 0.02,
-    spectral = 0.0,
-    multispectral = 1.0,
-    hvqvae_multipliers = (2, 1, 1),
-    loss_fn = 'lmix',
-    lmix_l2 = 1.0,
-    lmix_linf=0.02,
-    width = 32,
-    depth = 4,
-    m_conv = 1.0,
-    dilation_growth_rate = 3,
-    restore_vqvae=f'gs://jukebox-assets/models/72/vqvaeh4.pth.tar',
-)
-HPARAMS_REGISTRY["vqvaeh4"] = vqvaeh4
 
 labels = Hyperparams(
     y_bins=(120, 4111),
@@ -107,7 +87,7 @@ upsamplers.update(labels)
 
 upsampler_level_0 = Hyperparams(
     level=0,
-    restore_prior='gs://jukebox-assets/models/5b/prior_level_0.pth.tar'
+    restore_prior=REMOTE_PREFIX + 'jukebox/models/5b/prior_level_0.pth.tar'
 )
 upsampler_level_0.update(upsamplers)
 HPARAMS_REGISTRY["upsampler_level_0"] = upsampler_level_0
@@ -115,18 +95,10 @@ HPARAMS_REGISTRY["upsampler_level_0"] = upsampler_level_0
 upsampler_level_1 = Hyperparams(
     level=1,
     cond_res_scale=True,
-    restore_prior='gs://jukebox-assets/models/5b/prior_level_1.pth.tar'
+    restore_prior=REMOTE_PREFIX + 'jukebox/models/5b/prior_level_1.pth.tar'
 )
 upsampler_level_1.update(upsamplers)
 HPARAMS_REGISTRY["upsampler_level_1"] = upsampler_level_1
-
-upsampler_level_2 = Hyperparams(
-    level=2,
-    cond_res_scale=True,
-    restore_prior='gs://jukebox-assets/models/72/prior_level_2.pth.tar'
-)
-upsampler_level_2.update(upsamplers)
-HPARAMS_REGISTRY["upsampler_level_2"] = upsampler_level_2
 
 prior_5b = Hyperparams(
     level=2,
@@ -145,34 +117,12 @@ prior_5b = Hyperparams(
     n_tokens=0,
     prime_loss_fraction=0.0,
     merged_decoder=True,
-    restore_prior='gs://jukebox-assets/models/5b/prior_level_2.pth.tar',
+    restore_prior=REMOTE_PREFIX + 'jukebox/models/5b/prior_level_2.pth.tar',
     fp16_params=True,
 )
 prior_5b.update(labels)
 HPARAMS_REGISTRY["prior_5b"] = prior_5b
 
-prior_72 = Hyperparams(
-    level=3,
-    n_ctx=8192,
-    prior_width=4800,
-    prior_depth=72,
-    heads=8,
-    attn_order=2,
-    blocks=128,
-    init_scale=0.1,
-    c_res=1,
-    beta2=0.925,
-    min_duration=60.0,
-    max_duration=600.0,
-    use_tokens=False,
-    n_tokens=0,
-    prime_loss_fraction=0.0,
-    merged_decoder=True,
-    restore_prior='gs://jukebox-assets/models/72/prior_level_3.pth.tar',
-    fp16_params=True,
-)
-prior_5b.update(labels)
-HPARAMS_REGISTRY["prior_5b"] = prior_5b
 
 prior_5b_lyrics = Hyperparams(
     level=2,
@@ -197,7 +147,7 @@ prior_5b_lyrics = Hyperparams(
     n_tokens=512,
     prime_loss_fraction=0.4,
     merged_decoder=True,
-    restore_prior='gs://jukebox-assets/models/5b_lyrics/prior_level_2.pth.tar',
+    restore_prior=REMOTE_PREFIX + 'jukebox/models/5b_lyrics/prior_level_2.pth.tar',
     fp16_params=True,
     alignment_layer=68,
     alignment_head=2,
@@ -229,7 +179,7 @@ prior_1b_lyrics = Hyperparams(
     n_tokens=384,
     prime_loss_fraction=0.4,
     single_enc_dec=True,
-    restore_prior='gs://jukebox-assets/models/1b_lyrics/prior_level_2.pth.tar',
+    restore_prior=REMOTE_PREFIX + 'jukebox/models/1b_lyrics/prior_level_2.pth.tar',
     fp16_params=False,
     alignment_layer=63,
     alignment_head=0,
