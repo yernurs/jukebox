@@ -37,7 +37,7 @@ REMOTE_PREFIX = 'https://openaipublic.azureedge.net/'
 
 # Model hps
 vqvae = Hyperparams(
-    levels = 4,
+    levels = 3,
     downs_t = (3, 2, 2),
     strides_t = (2, 2, 2),
     emb_width = 64,
@@ -101,32 +101,16 @@ upsampler_level_1.update(upsamplers)
 HPARAMS_REGISTRY["upsampler_level_1"] = upsampler_level_1
 
 
-custom_upsampler_level_0 = Hyperparams(
-    level=0,
-    restore_prior=REMOTE_PREFIX + 'jukebox/models/custom/prior_level_0.pth.tar'
-)
-custom_upsampler_level_0.update(upsamplers)
-HPARAMS_REGISTRY["upsampler_level_0"] = upsampler_level_0
-
-custom_upsampler_level_1 = Hyperparams(
-    level=1,
-    cond_res_scale=True,
-    restore_prior=REMOTE_PREFIX + 'jukebox/models/custom/prior_level_1.pth.tar'
-)
-upsampler_level_1.update(upsamplers)
-HPARAMS_REGISTRY["upsampler_level_1"] = upsampler_level_1
-
-
 upsampler_level_2 = Hyperparams(
     level=2,
     cond_res_scale=True,
-    restore_prior=REMOTE_PREFIX + 'jukebox/models/custom/prior_level_2.pth.tar'
+    restore_prior=REMOTE_PREFIX + 'jukebox/models/5b/prior_level_2.pth.tar'
 )
-upsampler_level_1.update(upsamplers)
+upsampler_level_2.update(upsamplers)
 HPARAMS_REGISTRY["upsampler_level_2"] = upsampler_level_2
 
 prior_5b = Hyperparams(
-    level=2,
+    level=3,
     n_ctx=8192,
     prior_width=4800,
     prior_depth=72,
@@ -142,7 +126,7 @@ prior_5b = Hyperparams(
     n_tokens=0,
     prime_loss_fraction=0.0,
     merged_decoder=True,
-    restore_prior=REMOTE_PREFIX + 'jukebox/models/5b/prior_level_2.pth.tar',
+    restore_prior=REMOTE_PREFIX + 'jukebox/models/5b/prior_level_3.pth.tar',
     fp16_params=True,
 )
 prior_5b.update(labels)
@@ -231,25 +215,6 @@ small_vqvae = Hyperparams(
     dilation_growth_rate = 3,
 )
 HPARAMS_REGISTRY["small_vqvae"] = small_vqvae
-
-custom_small_vqvae = Hyperparams(
-    sr = 22050,
-    levels = 3,
-    downs_t = (5, 3),
-    strides_t = (2, 2),
-    emb_width = 64,
-    l_bins = 1024,
-    l_mu = 0.99,
-    commit = 0.02,
-    spectral = 0.0,
-    multispectral = 1.0,
-    loss_fn = 'l2',
-    width = 32,
-    depth = 4,
-    m_conv = 1.0,
-    dilation_growth_rate = 3,
-)
-HPARAMS_REGISTRY["small_vqvae"] = custom_small_vqvae
 
 
 small_prior = Hyperparams(
