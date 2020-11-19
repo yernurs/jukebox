@@ -37,7 +37,7 @@ REMOTE_PREFIX = 'https://openaipublic.azureedge.net/'
 
 # Model hps
 vqvae = Hyperparams(
-    levels = 3,
+    levels = 4,
     downs_t = (3, 2, 2),
     strides_t = (2, 2, 2),
     emb_width = 64,
